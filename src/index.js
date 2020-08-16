@@ -8,20 +8,19 @@ function HelloWorldFunction({ title }) {
   return <h1 alt="('test')"> {title} </h1>
 }
 
-function Car(props) {
-  const isHonda = props.isHonda;
-  const isToyota = props.isToyota;
-  let car;
-  if (isHonda) {
-    return <h1>Honda</h1>
-  }
-  if (isToyota) {
-    return <h1>Toyota</h1>
-  }
-  return <div>
-    <h1>No Name</h1>
-    {car ? car : <spam>No Name</spam>}
-  </div>
+function ComponentExp(props) {
+  return props.children;
+}
+
+function Composition() {
+  const word = false ? 'even' : 'odd'
+  return (
+    <h1>
+      Hello World
+      <ComponentExp title={'Hello WOrld'}> {word} </ComponentExp>
+      <ComponentExp> Hello World h3</ComponentExp>
+    </h1>
+  )
 }
 
 class HelloWorldClass extends React.Component {
@@ -67,6 +66,7 @@ class HelloWorldClass extends React.Component {
 ReactDOM.render(
   <React.StrictMode>
     {/* <App /> */}
+    <Composition></Composition>
     <HelloWorldClass title={'Hello World Count'}></HelloWorldClass>
   </React.StrictMode>,
   document.getElementById('root')
