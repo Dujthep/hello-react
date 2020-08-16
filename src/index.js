@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment': return state + 1;
+    case 'decrement': return state - 1;
+    default: return state;
+  }
+}
+
 function Exp(props) {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useReducer(reducer, 0)
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
 
@@ -12,13 +20,17 @@ function Exp(props) {
     setName(`${title} ${count}`)
   }, [title]);
 
+  useEffect((effect) => {
+  }, []);
+
   return (
     <div>
       <p>{name}</p>
       <p>{count}</p>
       <p>This is title: {title}</p>
       <input value={title} onChange={(event) => setTitle(event.target.value)}></input>
-      <button onClick={() => setCount(count + 1)}> Click </button>
+      <button onClick={() => setCount({ type: 'increment' })}> increment </button>
+      <button onClick={() => setCount({ type: 'decrement' })}> decrement </button>
     </div>
   )
 }
