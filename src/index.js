@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import styled from 'styled-components';
+import TodoRedux from './redux/TodoRedux'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './redux/reducer'
+
+const store = createStore(reducer);
 
 const TodoXList = styled.li`
   color: ${props => props.color ? props.color : 'blue'} ;
@@ -30,7 +36,7 @@ function ReactHook(props) {
   )
 }
 
-function reducer(state, action) {
+function red(state, action) {
   switch (action.type) {
     case 'increment': return state + 1;
     case 'decrement': return state - 1;
@@ -39,7 +45,7 @@ function reducer(state, action) {
 }
 
 function Exp(props) {
-  const [count, setCount] = useReducer(reducer, 0)
+  const [count, setCount] = useReducer(red, 0)
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
 
@@ -190,6 +196,10 @@ class HelloWorldClass extends React.Component {
 
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
+      <TodoRedux></TodoRedux>
+    </Provider>
+    <h1>--------------</h1>
     <ReactHook></ReactHook>
     <Exp></Exp>
     <Wrapped></Wrapped>
