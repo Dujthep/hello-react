@@ -1,7 +1,28 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+
+function ReactHook(props) {
+  const [todo, setTodo] = useState(['asdas']);
+  const [title, setTitle] = useState('');
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setTodo([...todo, title]);
+      setTitle('');
+    }
+  }
+  return (
+    <div>
+      <input value={title} onChange={e => setTitle(e.target.value)} onKeyDown={handleKeyDown}></input>
+      <ul>
+        <li>1</li>
+        {todo.map((li, i) => <li key={i}>{li}</li>)}
+      </ul>
+    </div>
+  )
+}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -163,6 +184,7 @@ class HelloWorldClass extends React.Component {
 
 ReactDOM.render(
   <React.StrictMode>
+    <ReactHook></ReactHook>
     <Exp></Exp>
     <Wrapped></Wrapped>
     <LoadingComponent isLoding={false}></LoadingComponent>
