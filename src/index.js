@@ -4,9 +4,70 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+function HelloWorldFunction({ title }) {
+  return <h1 alt="('test')"> {title} </h1>
+}
+
+function Car(props) {
+  const isHonda = props.isHonda;
+  const isToyota = props.isToyota;
+  let car;
+  if (isHonda) {
+    return <h1>Honda</h1>
+  }
+  if (isToyota) {
+    return <h1>Toyota</h1>
+  }
+  return <div>
+    <h1>No Name</h1>
+    {car ? car : <spam>No Name</spam>}
+  </div>
+}
+
+class HelloWorldClass extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      count: 0,
+      title: 'init',
+      list: []
+    };
+  }
+
+  onAdd = () => {
+    this.setState((prevState) => ({ count: prevState.count + 1 }))
+  }
+
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      const wording = Number.isNaN(+e.target.value);
+      this.setState((prevState) => ({ list: [...prevState.list, wording ? 'not Number' : 'isNumber'] }));
+      e.target.value = ''
+    }
+  }
+
+  render() {
+    const number = []
+    for (let i = 1; i <= this.state.count; i++) {
+      number.push(<li key={i}> {`this number ${i} and this is ${i % 2 === 0 ? 'even' : 'odd'}`} </li>)
+    }
+    return <div>
+      <p>{this.props.title} : {this.state.count}</p>
+      <input type="text" onKeyDown={this.handleKeyDown}></input>
+      <button onClick={this.onAdd}>Add</button>
+      <ul>
+        {/* {number} */}
+        {this.state.list.map((li, i) => <li key={i}>{li}</li>)}
+      </ul>
+    </div>
+  }
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <HelloWorldClass title={'Hello World Count'}></HelloWorldClass>
   </React.StrictMode>,
   document.getElementById('root')
 );
