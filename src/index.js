@@ -2,6 +2,12 @@ import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import styled from 'styled-components';
+
+const TodoXList = styled.li`
+  color: ${props => props.color ? props.color : 'blue'} ;
+  font-size: 20px
+`;
 
 function ReactHook(props) {
   const [todo, setTodo] = useState(['asdas']);
@@ -18,7 +24,7 @@ function ReactHook(props) {
       <input value={title} onChange={e => setTitle(e.target.value)} onKeyDown={handleKeyDown}></input>
       <ul>
         <li>1</li>
-        {todo.map((li, i) => <li key={i}>{li}</li>)}
+        {todo.map((li, i) => <TodoXList color={'red'}>{li}</TodoXList>)}
       </ul>
     </div>
   )
