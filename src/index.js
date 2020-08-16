@@ -1,11 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+const ColorContext = React.createContext('pink');
 
 function HelloWorldFunction({ title }) {
   return <h1 alt="('test')"> {title} </h1>
+}
+
+function Todo({ color, title }) {
+  return <p style={{ color }}>{title}</p>
+}
+
+function TodoList({ color }) {
+  return (
+    <div>
+      <Todo title={'Todo 1'} color={color}></Todo>
+      <Todo title={'Todo 2'} color={color}></Todo>
+    </div>
+  )
+}
+// function ToggleToDoButton() {
+//   return (
+//     <ColorContext.Consumer>
+//       {(context) => {
+//         return <button>{context.color}</button>
+//       }}
+//     </ColorContext.Consumer>
+//   )
+// }
+
+function Display() {
+  return (
+    <ColorContext.Provider value={'pink'}>
+      <TodoList></TodoList>
+      {/* <ToggleToDoButton></ToggleToDoButton> */}
+    </ColorContext.Provider>
+  )
 }
 
 function ComponentExp(props) {
@@ -22,6 +54,27 @@ function Composition() {
     </h1>
   )
 }
+
+
+function Hello() {
+  return <h1>Hello World</h1>
+}
+
+const withLoadingComponent = (WrappedComponent) => {
+  return class ComponentLoading extends React.Component {
+    render() {
+      if (this.props.isLoding) {
+        return (
+          <WrappedComponent></WrappedComponent>
+        )
+      } else {
+        return <h1>Loading</h1>
+      }
+    }
+  }
+}
+
+const LoadingComponent = withLoadingComponent(Hello);
 
 class HelloWorldClass extends React.Component {
 
@@ -66,6 +119,9 @@ class HelloWorldClass extends React.Component {
 ReactDOM.render(
   <React.StrictMode>
     {/* <App /> */}
+
+    {/* <Display></Display> */}
+    <LoadingComponent isLoding={false}></LoadingComponent>
     <Composition></Composition>
     <HelloWorldClass title={'Hello World Count'}></HelloWorldClass>
   </React.StrictMode>,
