@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+
+function Exp(props) {
+  const [count, setCount] = useState(0)
+  const [title, setTitle] = useState('');
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    setName(`${title} ${count}`)
+  }, [title]);
+
+  return (
+    <div>
+      <p>{name}</p>
+      <p>{count}</p>
+      <p>This is title: {title}</p>
+      <input value={title} onChange={(event) => setTitle(event.target.value)}></input>
+      <button onClick={() => setCount(count + 1)}> Click </button>
+    </div>
+  )
+}
 
 const ColorContext = React.createContext('pink');
 
@@ -76,6 +96,19 @@ const withLoadingComponent = (WrappedComponent) => {
 
 const LoadingComponent = withLoadingComponent(Hello);
 
+const wrappedComponent = (WrappedComponent) => {
+  return class ComponentWrapped extends React.Component {
+    render() {
+      return (<div>
+        <WrappedComponent></WrappedComponent>
+      </div>)
+    }
+  }
+}
+
+const Wrapped = wrappedComponent(Hello);
+
+
 class HelloWorldClass extends React.Component {
 
   constructor(props) {
@@ -118,9 +151,8 @@ class HelloWorldClass extends React.Component {
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-
-    {/* <Display></Display> */}
+    <Exp></Exp>
+    <Wrapped></Wrapped>
     <LoadingComponent isLoding={false}></LoadingComponent>
     <Composition></Composition>
     <HelloWorldClass title={'Hello World Count'}></HelloWorldClass>
